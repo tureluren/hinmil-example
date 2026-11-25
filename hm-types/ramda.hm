@@ -1,0 +1,189 @@
+// ==========================================================================
+// HinMil signatures for Ramda (https://ramdajs.com), version 0.29 and later.
+//
+// Ramda does not ship HM types itself (yet).  This file shows what that
+// could look like; copy it to `hm-types/ramda.hm` in your own project.
+// It covers the most used functions.  Once Ramda is installed
+// (`npm install`), a function that is not declared here is `Any`.
+//
+// Ramda's functions are curried: `::curried` above a declaration lets that
+// function take its arguments in any grouping (`map (f, xs)`,
+// `map (f) (xs)`).  `__` leaves an argument open (`subtract (__, 10)`).
+//
+// Ramda dispatches many functions on several kinds of values (lists,
+// strings, objects, functors).  These signatures cover the list form, plus
+// the string or object form where it is common.
+// ==========================================================================
+
+// The placeholder: an opaque type of its own.
+Placeholder :: Placeholder
+__ :: Placeholder
+
+// --- Composition (variadic, so not curried) -------------------------------
+pipe :: ((a -> b), (b -> c), ..., (y -> z)) -> a -> z
+compose :: ((y -> z), ..., (b -> c), (a -> b)) -> a -> z
+curry :: ((a, b, ...) -> z) -> a -> b -> ... -> z
+
+identity :: a -> a
+
+// --- Functions -------------------------------------------------------------
+::curried
+always :: a -> b -> a
+::curried
+tap :: (a -> b) -> a -> a
+
+// --- Lists -----------------------------------------------------------------
+::curried
+map :: (a -> b) -> [a] -> [b]
+map :: (a -> b) -> Object String a -> Object String b
+::curried
+filter :: (a -> t) -> [a] -> [a]
+filter :: (a -> t) -> Object String a -> Object String a
+::curried
+reject :: (a -> t) -> [a] -> [a]
+::curried
+reduce :: ((b, a) -> b) -> b -> [a] -> b
+::curried
+chain :: (a -> [b]) -> [a] -> [b]
+::curried
+find :: (a -> t) -> [a] -> (a | Undefined)
+::curried
+findIndex :: (a -> t) -> [a] -> Number
+::curried
+all :: (a -> t) -> [a] -> Boolean
+::curried
+any :: (a -> t) -> [a] -> Boolean
+::curried
+none :: (a -> t) -> [a] -> Boolean
+::curried
+partition :: (a -> t) -> [a] -> [[a], [a]]
+::curried
+groupBy :: (a -> String) -> [a] -> Object String [a]
+::curried
+indexBy :: (a -> String) -> [a] -> Object String a
+::curried
+countBy :: (a -> String) -> [a] -> Object String Number
+::curried
+sortBy :: (a -> b) -> [a] -> [a]
+::curried
+sort :: ((a, a) -> Number) -> [a] -> [a]
+::curried
+uniqBy :: (a -> b) -> [a] -> [a]
+::curried
+pluck :: k -> [{ [k] :: a, ...r }] -> [a]
+::curried
+nth :: Number -> [a] -> (a | Undefined)
+::curried
+take :: Number -> [a] -> [a]
+take :: Number -> String -> String
+::curried
+drop :: Number -> [a] -> [a]
+drop :: Number -> String -> String
+::curried
+append :: a -> [a] -> [a]
+::curried
+prepend :: a -> [a] -> [a]
+::curried
+concat :: [a] -> [a] -> [a]
+concat :: String -> String -> String
+::curried
+includes :: a -> [a] -> Boolean
+includes :: String -> String -> Boolean
+::curried
+without :: [a] -> [a] -> [a]
+::curried
+difference :: [a] -> [a] -> [a]
+::curried
+zip :: [a] -> [b] -> [[a, b]]
+::curried
+join :: String -> [a] -> String
+::curried
+range :: Number -> Number -> [Number]
+
+head :: [a] -> (a | Undefined)
+head :: String -> String
+last :: [a] -> (a | Undefined)
+last :: String -> String
+tail :: [a] -> [a]
+tail :: String -> String
+init :: [a] -> [a]
+init :: String -> String
+reverse :: [a] -> [a]
+reverse :: String -> String
+uniq :: [a] -> [a]
+length :: [a] -> Number
+length :: String -> Number
+sum :: [Number] -> Number
+mean :: [Number] -> Number
+fromPairs :: [[String, a]] -> Object String a
+toPairs :: Object String a -> [[String, a]]
+
+// --- Objects ---------------------------------------------------------------
+::curried
+prop :: k -> { [k] :: a, ...r } -> a
+::curried
+propOr :: a -> k -> { [k] :: a, ...r } -> a
+::curried
+propEq :: a -> k -> { [k] :: a, ...r } -> Boolean
+::curried
+has :: String -> a -> Boolean
+keys :: a -> [String]
+
+// --- Logic -----------------------------------------------------------------
+::curried
+equals :: a -> a -> Boolean
+not :: a -> Boolean
+::curried
+complement :: (a -> t) -> a -> Boolean
+::curried
+both :: (a -> Boolean) -> (a -> Boolean) -> a -> Boolean
+::curried
+either :: (a -> Boolean) -> (a -> Boolean) -> a -> Boolean
+::curried
+ifElse :: (a -> t) -> (a -> b) -> (a -> b) -> a -> b
+::curried
+when :: (a -> t) -> (a -> a) -> a -> a
+::curried
+unless :: (a -> t) -> (a -> a) -> a -> a
+::curried
+defaultTo :: a -> (a | Null | Undefined) -> a
+isNil :: a -> Boolean
+isEmpty :: a -> Boolean
+
+// --- Math ------------------------------------------------------------------
+::curried
+add :: Number -> Number -> Number
+::curried
+subtract :: Number -> Number -> Number
+::curried
+multiply :: Number -> Number -> Number
+::curried
+divide :: Number -> Number -> Number
+inc :: Number -> Number
+dec :: Number -> Number
+negate :: Number -> Number
+::curried
+max :: a -> a -> a
+::curried
+min :: a -> a -> a
+::curried
+gt :: a -> a -> Boolean
+::curried
+gte :: a -> a -> Boolean
+::curried
+lt :: a -> a -> Boolean
+::curried
+lte :: a -> a -> Boolean
+
+// --- Strings ---------------------------------------------------------------
+toUpper :: String -> String
+toLower :: String -> String
+trim :: String -> String
+::curried
+split :: String -> String -> [String]
+split :: RegExp -> String -> [String]
+::curried
+replace :: String -> String -> String -> String
+replace :: RegExp -> String -> String -> String
+::curried
+test :: RegExp -> String -> Boolean
