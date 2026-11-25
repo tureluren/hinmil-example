@@ -1,0 +1,13 @@
+{
+  "name": "hinmil-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Try HinMil in five minutes: Hindley-Milner type checking for plain JavaScript",
+  "license": "MIT",
+  "scripts": {
+    "check": "hinmil src"
+  },
+  "devDependencies": {
+    "hinmil": "^0.1.0"
+  }
+}

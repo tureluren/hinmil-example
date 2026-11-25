@@ -1,0 +1,7 @@
+{
+  // VS Code's built-in TypeScript checker also analyses JavaScript. Its
+  // diagnostics do not know HM annotations, so they are switched off here.
+  // Its hover and completions stay; see the HinMil README for the full picture.
+  "js/ts.validate.enabled": false,
+  "javascript.validate.enable": false
+}
